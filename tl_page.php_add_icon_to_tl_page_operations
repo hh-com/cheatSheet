@@ -6,6 +6,11 @@
       	'icon'                => 'article.svg',
 	'button_callback'     => array('tl_page_extend', 'editSpecificArticles')
     );
+    
+    /* remove unused icons  */
+    unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['articles']);
+    unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['show']);
+    unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['copyChilds']);
 
     class tl_page_extend extends Contao\Backend
     {
