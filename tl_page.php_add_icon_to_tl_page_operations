@@ -1,0 +1,57 @@
+<?php
+
+    $GLOBALS['TL_DCA']['tl_page']['list']['operations']['specificArticle'] = array
+    (
+      'href'                => 'do=article&table=tl_content',
+		  'icon'                => 'article.svg',
+		  'button_callback'     => array('tl_page_extend', 'editSpecificArticles')
+    );
+
+    class tl_page_extend extends Contao\Backend
+    {
+
+        /**
+         * Import the back end user object
+         */
+        public function __construct()
+        {
+            parent::__construct();
+            $this->import('Contao\BackendUser', 'User');
+        }
+        
+        /**
+         * Generate an "specific" button and return it as string
+         * In this case: The Content-Elements in the first Article from a page
+         *
+         * @param array  $row
+         * @param string $href
+         * @param string $label
+         * @param string $title
+         * @param string $icon
+         *
+         * @return string
+         */
+        public function editSpecificArticles($row, $href, $label, $title, $icon)
+        {
+            if (!$this->User->hasAccess('article', 'modules'))
+            {
+                return '';
+            }
+
+            $article = $this->getFirstMainArticleFromPageId($row['id']);
+
+            if($article == null)
+            {
+                return '';
+            }
+    
+            return ($row['type'] == 'regular' || $row['type'] == 'error_401' || $row['type'] == 'error_403' || $row['type'] == 'error_404') ? '<a href="' . $this->addToUrl($href.'&amp;id='.$article->id) . '  title="'.Contao\StringUtil::specialchars($title).'">'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
+
+        }
+
+        public function getFirstMainArticleFromPageId($pageId)
+        {
+            return \Contao\ArticleModel::findPublishedByPidAndColumn($pageId, 'main');
+        }
+    }
+?>
