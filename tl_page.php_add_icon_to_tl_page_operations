@@ -1,10 +1,11 @@
+```php
 <?php
 
     $GLOBALS['TL_DCA']['tl_page']['list']['operations']['specificArticle'] = array
     (
-      'href'                => 'do=article&table=tl_content',
-		  'icon'                => 'article.svg',
-		  'button_callback'     => array('tl_page_extend', 'editSpecificArticles')
+      	'href'                => 'do=article&table=tl_content',
+      	'icon'                => 'article.svg',
+	'button_callback'     => array('tl_page_extend', 'editSpecificArticles')
     );
 
     class tl_page_extend extends Contao\Backend
