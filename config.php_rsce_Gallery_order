@@ -13,8 +13,6 @@
             document.body.addEventListener('DOMSubtreeModified', function(event) {
                 var elements = document.getElementsByClassName('rsceSortableCustom');
 
-                console.log(elements);
-
                 Object.keys(elements).map(function(objectKey, index) {
                     var obj = elements[objectKey];
                     obj.addEventListener('mouseup', function(){
