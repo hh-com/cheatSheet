@@ -39,7 +39,7 @@
                     var input = ( obj.getElementsByTagName('input') );
                     input[0].value = newOrder;
                 }
-                });
+            });
 
             </script>";
 
