@@ -1,0 +1,74 @@
+<?php
+    /**
+    * Add this in config.php in your custom module or in dcaconfig.php
+    * To sort images with rock solid custom elements inside 'inputType' => 'list'
+    *
+    */
+    if (TL_MODE == 'BE')
+    {
+        if (\Contao\Input::get('act') == 'edit' && \Contao\Input::get('do') == 'article' && \Contao\Input::get('id'))
+        {
+            $GLOBALS['TL_MOOTOOLS'][] = "<script>
+
+            document.body.addEventListener('DOMSubtreeModified', function(event) {
+                var elements = document.getElementsByClassName('rsceSortable');
+
+                console.log(elements);
+
+                Object.keys(elements).map(function(objectKey, index) {
+                    var obj = elements[objectKey];
+                    obj.addEventListener('mouseup', function(){
+                        newOrder = getListOrder(obj);
+                        updateInputValue(obj, newOrder);
+                    });	
+                });
+
+                function getListOrder(obj) {
+                    var inputValue = [];
+                    var list = obj.querySelectorAll('.sgallery li');
+
+                    list.forEach(function (el, index) {
+                        if (el.getAttribute('data-id') != null) {
+                            inputValue.push(el.getAttribute('data-id'))
+                        }
+                    });
+                    return inputValue.join(',');
+                }
+
+                function updateInputValue(obj, newOrder) {
+                    var input = ( obj.getElementsByTagName('input') );
+                    input[0].value = newOrder;
+                }
+                });
+
+            </script>";
+
+        }
+    }
+    
+    
+    
+    /**
+    * your rock solid custom element configuration
+    *
+    // .............
+    // INSIDE 'inputType' => 'list'
+    'image' => array(
+					'label' => array(
+						'de' => array('Bilder', 'Wählen Sie ein oder mehrere Bilder aus.')
+					),
+					'inputType' => 'fileTree',
+					'eval' => array(
+						'multiple' => true,
+						'fieldType' => 'checkbox',
+						'filesOnly' => true,
+						'extensions' => 'jpg,jpeg,png,gif,svg',
+						'mandatory'=>false,
+						'orderField' => 'orderSRC', /* MUST be set*/
+						'tl_class' => 'w50 rsceSortableCustom', /* custom css class for javascript */
+						'files'=>true,
+						'isGallery' => true, 
+					)					
+				),
+    // .............  
+?>
