@@ -11,7 +11,7 @@
             $GLOBALS['TL_MOOTOOLS'][] = "<script>
 
             document.body.addEventListener('DOMSubtreeModified', function(event) {
-                var elements = document.getElementsByClassName('rsceSortable');
+                var elements = document.getElementsByClassName('rsceSortableCustom');
 
                 console.log(elements);
 
