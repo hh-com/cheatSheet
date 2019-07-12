@@ -10,3 +10,8 @@ Tested in Contao 4.7
 **config.php - _rsce_Gallery_order and rscr_whatever_config.php**
 
 To change the image order in rock solid custom elements.
+
+\
+**config.php - _deactivate_Node_picker_in_Article_Page_and_Files**
+
+Deactivate the nodepicker (Backend Breadcrumb-Menü) in Contao.
