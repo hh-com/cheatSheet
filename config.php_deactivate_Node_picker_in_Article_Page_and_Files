@@ -1,0 +1,33 @@
+if (TL_MODE == 'BE') 
+{ 
+    /* Deaktiviert den Nodepicker in der Seitenstruktur und in Artikel */ 
+    if (\Contao\Input::get('do') == 'page' || \Contao\Input::get('do') == 'article') 
+    { 
+        $GLOBALS['TL_MOOTOOLS'][] = "<script> 
+
+        var list = document.querySelectorAll('.tl_left a'); 
+
+            list.forEach(function (el, index) { 
+                if(el.href.includes('&pn=')) 
+                    el.setAttribute('onclick','return false;'); 
+                    el.setAttribute('title',''); 
+            }); 
+
+        </script>"; 
+    } 
+    /* Deaktiviert den Nodepicker in der Dateiverwaltung */ 
+    if (\Contao\Input::get('do') == 'files') 
+    { 
+        $GLOBALS['TL_MOOTOOLS'][] = "<script> 
+
+        var list = document.querySelectorAll('.tl_left a'); 
+
+            list.forEach(function (el, index) { 
+                if(el.href.includes('&fn=')) 
+                    el.setAttribute('onclick','return false;'); 
+                    el.setAttribute('title',''); 
+            }); 
+
+        </script>"; 
+    } 
+}  
